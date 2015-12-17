@@ -1,0 +1,152 @@
+{
+    "jobNameEN": {
+        "jobNameJP": "(str)職名",
+        "Strength": "(int)力",
+        "Intelligence": "(int)知能",
+        "Piety": "(int)信仰心",
+        "Vitality": "(int)生命力",
+        "Dexterity": "(int)器用さ",
+        "Agility": "(int)速さ",
+        "Charisma": "(int)魅力"
+    },
+    "Fighter": {
+        "jobNameJP": "戦士",
+        "Strength": "12",
+        "Intelligence": "0",
+        "Piety": "0",
+        "Vitality": "0",
+        "Dexterity": "0",
+        "Agility": "0",
+        "Charisma": "0"
+    },
+    "Mage": {
+        "jobNameJP": "魔法使い",
+        "Strength": "0",
+        "Intelligence": "12",
+        "Piety": "0",
+        "Vitality": "0",
+        "Dexterity": "0",
+        "Agility": "0",
+        "Charisma": "0"
+    },
+    "Priest": {
+        "jobNameJP": "僧侶",
+        "Strength": "0",
+        "Intelligence": "0",
+        "Piety": "12",
+        "Vitality": "0",
+        "Dexterity": "0",
+        "Agility": "0",
+        "Charisma": "0"
+    },
+    "Thief": {
+        "jobNameJP": "盗賊",
+        "Strength": "0",
+        "Intelligence": "0",
+        "Piety": "0",
+        "Vitality": "0",
+        "Dexterity": "12",
+        "Agility": "0",
+        "Charisma": "0"
+    },
+    "Ranger": {
+        "jobNameJP": "レンジャー",
+        "Strength": "10",
+        "Intelligence": "8",
+        "Piety": "8",
+        "Vitality": "11",
+        "Dexterity": "10",
+        "Agility": "8",
+        "Charisma": "8"
+    },
+    "Alchemist": {
+        "jobNameJP": "錬金術師",
+        "Strength": "0",
+        "Intelligence": "13",
+        "Piety": "0",
+        "Vitality": "0",
+        "Dexterity": "13",
+        "Agility": "0",
+        "Charisma": "0"
+    },
+    "Bard": {
+        "jobNameJP": "バード",
+        "Strength": "0",
+        "Intelligence": "10",
+        "Piety": "0",
+        "Vitality": "0",
+        "Dexterity": "12",
+        "Agility": "8",
+        "Charisma": "12"
+    },
+    "Psionic": {
+        "jobNameJP": "超能力者",
+        "Strength": "10",
+        "Intelligence": "14",
+        "Piety": "0",
+        "Vitality": "14",
+        "Dexterity": "0",
+        "Agility": "0",
+        "Charisma": "10"
+    },
+    "Valkyrie": {
+        "jobNameJP": "ヴァルキリー",
+        "Strength": "10",
+        "Intelligence": "0",
+        "Piety": "11",
+        "Vitality": "11",
+        "Dexterity": "10",
+        "Agility": "11",
+        "Charisma": "8"
+    },
+    "Bishop": {
+        "jobNameJP": "ビショップ",
+        "Strength": "0",
+        "Intelligence": "15",
+        "Piety": "15",
+        "Vitality": "0",
+        "Dexterity": "0",
+        "Agility": "0",
+        "Charisma": "8"
+    },
+    "Lord": {
+        "jobNameJP": "ロード",
+        "Strength": "12",
+        "Intelligence": "9",
+        "Piety": "12",
+        "Vitality": "12",
+        "Dexterity": "9",
+        "Agility": "9",
+        "Charisma": "14"
+    },
+    "Samurai": {
+        "jobNameJP": "侍",
+        "Strength": "12",
+        "Intelligence": "11",
+        "Piety": "0",
+        "Vitality": "9",
+        "Dexterity": "12",
+        "Agility": "14",
+        "Charisma": "8"
+    },
+    "Monk": {
+        "jobNameJP": "修道僧",
+        "Strength": "13",
+        "Intelligence": "8",
+        "Piety": "13",
+        "Vitality": "0",
+        "Dexterity": "10",
+        "Agility": "13",
+        "Charisma": "8"
+    },
+    "Ninja": {
+        "jobNameJP": "忍者",
+        "Strength": "12",
+        "Intelligence": "10",
+        "Piety": "10",
+        "Vitality": "12",
+        "Dexterity": "12",
+        "Agility": "12",
+        "Charisma": "0"
+    }
+}
