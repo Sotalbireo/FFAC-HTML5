@@ -1,3 +1,5 @@
 *.gif
 *.sublime-project
 *.sublime-workspace
+node_modules/
+typings/

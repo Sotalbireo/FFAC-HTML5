@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "ffac",
+  "version": "0.0.1",
+  "description": "Free Fight Adventure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc typed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sotalbireo/FFAC-HTML5.git"
+  },
+  "author": "Sota Nakagami",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sotalbireo/FFAC-HTML5/issues"
+  },
+  "homepage": "https://github.com/Sotalbireo/FFAC-HTML5#readme",
+  "dependencies": {
+    "backbone": "^1.3.3",
+    "backbone-localstorage": "^0.3.2",
+    "jquery": "^3.1.0",
+    "lodash": "^4.14.1"
+  },
+  "devDependencies": {
+    "backbone-typings": "^1.0.3",
+    "browserify": "^13.1.0"
+  }
+}

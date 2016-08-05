@@ -8,5 +8,6 @@ Free Fight Adventure Classic - HTML5 Edition
 
 ## FFA?
 **Free Fight Adventure**.
+<s>Final Fantasy Adventure</s>でゎなぃ…
 
-ジョブ・クラスシステムを採用したPvP要素ありの育成ゲームです。多分。
+ジョブ・クラスシステムを採用したPvP要素ありのキャラ育成ゲームです。多分。
