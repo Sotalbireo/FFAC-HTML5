@@ -1,6 +1,8 @@
 {
   "name": "ffac",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160723033700"
+  },
   "globalDependencies": {
     "backbone": "file:node_modules\\backbone-typings\\backbone.d.ts",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008",

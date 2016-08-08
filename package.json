@@ -20,7 +20,7 @@
   "homepage": "https://github.com/Sotalbireo/FFAC-HTML5#readme",
   "dependencies": {
     "backbone": "^1.3.3",
-    "backbone-localstorage": "^0.3.2",
+    "backbone.localstorage": "github:jeromegn/Backbone.localStorage",
     "jquery": "^3.1.0",
     "lodash": "^4.14.1"
   },
