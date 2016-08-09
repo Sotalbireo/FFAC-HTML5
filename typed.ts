@@ -9,48 +9,99 @@ class ItemModel extends Backbone.Model {
 			return "Items Cost is not Number.";
 		}
 	}
-
 	constructor(argument) {
 		super(argument);
 	}
 }
 class ItemCollections extends Backbone.Collection<ItemModel> {
-
 	constructor(argument) {
 		super(argument);
 		this.model = ItemModel;
-		this.url = '/data';
-
+		this.url = 'app/data/item.json';
 	}
 }
 
 class MainView extends Backbone.View<Backbone.Model> {
-		tpl;
+	template;
 
 	constructor(argument) {
 		super(argument);
-		this.el = $('#a');
-		this.tpl = _.template($('#b').html());
+		this.el = $('#c1 tbody');
+		this.template = _.template($('#c2').html());
+		this.model = new ItemModel({});
+		this.collection = new ItemCollections({});
+		this.collection.fetch();
 
+		this.listenTo(this.collection, 'sync', this.perse);
+	}
+	perse(){
+		this.collection.each((ele, i)=>{
+			if(!this.model.isValid()){
+				this.collection.remove(ele, {silent:true});
+			}
+		});
 		this.render();
 	}
 	render(){
-		let wrapr = document.createElement('p')
-		wrapr.innerHTML += this.tpl({'name': 'john'});
 
-		this.el.append(wrapr);
+
+		this.collection.each((model)=>{
+			this.el.append(this.template(model.toJSON()));
+		});
+
 		return this;
 	}
 }
 
+class Router extends Backbone.Router {
+	main;
+	routes = {
+		''      : 'index',
+		'#item' : 'itemView'
+	};
+	constructor(argument) {
+		super(argument);
+	}
+	index(){
+		console.log('index');
+		new MainView({});
+	}
+	itemView(){
+		console.log('itemView');
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function ready(fn) {
-  if (document.readyState != 'loading'){
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
+	if (document.readyState != 'loading'){
+		fn();
+	} else {
+		document.addEventListener('DOMContentLoaded', fn);
+	}
 }
 
 ready(()=>{
-	new MainView({});
+	new Router({})
+	Backbone.history.start({pushState:false});
 });

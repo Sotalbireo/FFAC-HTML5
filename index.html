@@ -14,9 +14,21 @@
 
 
 <script type="text/template" id="b">
-<h1>Hello, <%= name %>!</h1>
+<h1>Hello, <%- name %>!</h1>
 </script>
 
+<table id="c1" style="height:30em;position:relative;">
+<thead style="">
+<tr><th>Name</th><th>ATK</th><th>Cost</th></tr>
+</thead>
+<tbody style="/*overflow-y:scroll;height:90%;display:block;*/">
+</tbody>
+</table>
+
+
+<script type="text/template" id="c2">
+<tr><td><%- name %></td><td><%- atk %></td><td><%- cost %></td></tr>
+</script>
 
 </body>
 </html>

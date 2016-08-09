@@ -16,21 +16,48 @@ class ItemCollections extends Backbone.Collection {
     constructor(argument) {
         super(argument);
         this.model = ItemModel;
-        this.url = '/data';
+        this.url = 'app/data/item.json';
     }
 }
 class MainView extends Backbone.View {
     constructor(argument) {
         super(argument);
-        this.el = $('#a');
-        this.tpl = _.template($('#b').html());
+        this.el = $('#c1 tbody');
+        this.template = _.template($('#c2').html());
+        this.model = new ItemModel({});
+        this.collection = new ItemCollections({});
+        this.collection.fetch();
+        this.listenTo(this.collection, 'sync', this.perse);
+    }
+    perse() {
+        this.collection.each((ele, i) => {
+            if (!this.model.isValid()) {
+                this.collection.remove(ele, { silent: true });
+            }
+        });
         this.render();
     }
     render() {
-        let wrapr = document.createElement('p');
-        wrapr.innerHTML += this.tpl({ 'name': 'john' });
-        this.el.append(wrapr);
+        this.collection.each((model) => {
+            this.el.append(this.template(model.toJSON()));
+        });
         return this;
+    }
+}
+class Router extends Backbone.Router {
+    constructor(argument) {
+        super(argument);
+        this.routes = {
+            '': 'index',
+            '#item': 'itemView'
+        };
+    }
+    index() {
+        console.log('index');
+        new MainView({});
+    }
+    itemView() {
+        console.log('itemView');
     }
 }
 function ready(fn) {
@@ -42,5 +69,6 @@ function ready(fn) {
     }
 }
 ready(() => {
-    new MainView({});
+    new Router({});
+    Backbone.history.start({ pushState: false });
 });
