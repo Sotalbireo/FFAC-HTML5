@@ -21,7 +21,7 @@ class ItemCollections extends Backbone.Collection<ItemModel> {
 	}
 }
 
-class MainView extends Backbone.View<Backbone.Model> {
+class ItemView extends Backbone.View<Backbone.Model> {
 	template;
 
 	constructor(argument) {
@@ -54,17 +54,19 @@ class MainView extends Backbone.View<Backbone.Model> {
 }
 
 class Router extends Backbone.Router {
-	main;
-	routes = {
-		''      : 'index',
-		'#item' : 'itemView'
-	};
 	constructor(argument) {
 		super(argument);
+		this.routes = {
+			""      : "index",
+			"#item" : "itemView"
+		};
+	}
+	initialize(){
+		_.bindAll(this);
 	}
 	index(){
 		console.log('index');
-		new MainView({});
+		new ItemView({});
 	}
 	itemView(){
 		console.log('itemView');
@@ -102,6 +104,6 @@ function ready(fn) {
 }
 
 ready(()=>{
-	new Router({})
-	Backbone.history.start({pushState:false});
+	new Router({});
+	console.log(Backbone.history.start({pushState:false,root:""}));
 });
