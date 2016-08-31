@@ -1,9 +1,15 @@
 {
 	"compilerOptions": {
 		"module": "amd",
+		"noImplicitAny": true,
+		"removeComments": true,
 		"target": "es6",
 		"sourceMap": true
 	},
+	"files": [
+		"./typings/index.d.ts",
+		"./app/minesweeper/page.ts"
+	],
 	"exclude": [
 		"node_modules"
 	]

@@ -37,3 +37,4 @@ function ready(fn) {
         document.addEventListener('DOMContentLoaded', fn);
     }
 }
+//# sourceMappingURL=main.js.map
