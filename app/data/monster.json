@@ -1,9 +1,11 @@
 {
-    "MonsterName" : {
-        "exp": "(int)",
-        "rnd": "(int)",
-        "baseHp": "(int)",
-        "damege": "(int)"
+    "//" : {
+        "MonsterName" : {
+            "exp": "(int)",
+            "rnd": "(int)",
+            "baseHp": "(int)",
+            "damege": "(int)"
+        }
     },
     "ラット": {
         "exp": "15",

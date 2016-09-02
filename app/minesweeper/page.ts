@@ -1,3 +1,6 @@
+import * as $ from "jquery";
+// import $ = require('jquery');
+// import _ = require('underscore');
 
 class Cell{
 	isOpened: boolean = false
@@ -42,7 +45,7 @@ class MineSweeper {
 		let mapping = this.arrayInit(row,col);
 		console.dir(mapping);
 
-		$('button').on('click', (ev)=>{
+		$('button').on('click', (ev: any)=>{
 			console.log((ev.target.name));
 		});
 	}
