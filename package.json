@@ -25,7 +25,6 @@
     "lodash": "^4.14.1"
   },
   "devDependencies": {
-    "backbone-typings": "^1.0.3",
-    "browserify": "^13.1.0"
+    "backbone-typings": "^1.0.3"
   }
 }
