@@ -23,7 +23,6 @@
 		"sourceMap": false
 	},
 	"include": [
-		"typings/index.d.ts",
 		"app/minesweeper/page.ts"
 	],
 	"exclude": [

@@ -1,5 +1,5 @@
 /// <reference path="../../node_modules/jquery/dist/jquery.min.js" />
-/// <reference path="../../node_modules/lodash/lodash.min.js" />
+/// <reference path="../../node_modules/backbone/node_modules/underscore/underscore-min.js" />
 
 class Cells {
 
@@ -48,7 +48,8 @@ class MineSweeper {
 	private row: number;
 	private col: number;
 	private bombs: number;
-	private map: number[][];
+	private _map: number[][];
+	private cells: any;
 	constructor(){
 		this.gameInit();
 
@@ -57,7 +58,7 @@ class MineSweeper {
 			let name:any = _domName.split('_');
 			name[0] = parseInt(name[0],10) -1;
 			name[1] = parseInt(name[1],10) -1;
-			v.innerHTML = ""+this.map[name[0]][name[1]];
+			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ""+this._map[name[0]][name[1]]: '&#'+parseInt('1f4a3',16);
 		});
 
 		$('button').on('click', (ev: any)=>{
@@ -75,8 +76,8 @@ class MineSweeper {
 		do {
 			let r = _.random(0,row-1);
 			let c = _.random(0,col-1);
-			if(this.map[r][c]!==9) {
-				this.map[r][c] = 9;
+			if(this._map[r][c]!==9) {
+				this._map[r][c] = 9;
 				this.setGuideNumber(r,c);
 				i++;
 			}
@@ -88,7 +89,7 @@ class MineSweeper {
 			const _r = r+area[i][0];
 			const _c = c+area[i][1];
 			if(0 <= _r && _r < this.row && 0 <= _c && _c < this.col) {
-				this.map[_r][_c] += (this.map[_r][_c]===9)? 0:1;
+				this._map[_r][_c] += (this._map[_r][_c]===9)? 0:1;
 			}
 		}
 	}
@@ -107,9 +108,17 @@ class MineSweeper {
 		this.row = $('#Table tr').length;
 		this.col = $('#Table tr td').length / this.row;
 		this.bombs = Math.floor(this.row*this.col*2/9);
-		this.map = this.arrayInit(this.row,this.col);
+		this._map = this.arrayInit(this.row,this.col);
 		this.setBombs(this.row, this.col, this.bombs);
+		this.cells = new Cells({
+			'row': this.row,
+			'col': this.col,
+			'bom': this.bombs
+		});
 
+	}
+	public get map(){
+		return this._map;
 	}
 }
 
