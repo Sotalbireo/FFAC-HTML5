@@ -1,19 +1,32 @@
 /// <reference path="../../node_modules/jquery/dist/jquery.min.js" />
 /// <reference path="../../node_modules/lodash/lodash.min.js" />
 
+class Cells {
 
-class Cell{
-	isOpened: boolean = false
-	isMine: boolean = false
-	neighbourMines: number = 0
-	constructor(n:number) {
+	constructor(args:any) {
+		console.log(args);
+	}
+}
+class Cell extends Cells{
+	private isOpened: boolean = false
+	private isMine: boolean = false
+	private neighbourMines: number = 0
+	constructor(args:any, n:number) {
+		super(args);
 		this.neighbourMines = n;
 		if(n===9) {
 			this.isMine = true;
 		}
+		console.log(this.isOpened);
 	}
-	open(){
-		this.isOpened = true;
+	open(r:number, c:number){
+		return (this.isMine)? this.fire(): this.showCell(r,c);
+	}
+	fire(){
+		this.showCell(-1,-1);
+	}
+	showCell(r:number,c:number){
+		console.log(r,c);
 	}
 }
 
@@ -39,9 +52,11 @@ class MineSweeper {
 	constructor(){
 		this.gameInit();
 
-		_.each($('button'), (v)=>{
-			let name = _.split(v.name, '_');
-			name[0]--; name[1]--;
+		_.each(document.getElementsByTagName('button'), (v)=>{
+			let _domName = v.name;
+			let name:any = _domName.split('_');
+			name[0] = parseInt(name[0],10) -1;
+			name[1] = parseInt(name[1],10) -1;
 			v.innerHTML = ""+this.map[name[0]][name[1]];
 		});
 
