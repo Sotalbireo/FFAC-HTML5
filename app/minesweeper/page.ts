@@ -54,8 +54,7 @@ class MineSweeper {
 		this.gameInit();
 
 		_.each(document.getElementsByTagName('button'), (v)=>{
-			let _domName = v.name;
-			let name:any = _domName.split('_');
+			let name:any = v.name.split('_');
 			name[0] = parseInt(name[0],10) -1;
 			name[1] = parseInt(name[1],10) -1;
 			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ""+this._map[name[0]][name[1]]: '&#'+parseInt('1f4a3',16);
