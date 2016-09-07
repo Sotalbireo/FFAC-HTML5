@@ -1,4 +1,5 @@
 *.gif
+*.js
 *.js.map
 *.sublime-project
 *.sublime-workspace
