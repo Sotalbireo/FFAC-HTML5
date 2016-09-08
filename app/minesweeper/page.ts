@@ -17,29 +17,37 @@ class Util {
 class Cells {
 	private col: number
 	private row: number
-
+	private flags: number
+	private map: any
 	constructor(args?:any) {
 		args = args || {};
-
+		this.col = args.col || 0;
+		this.row = args.row || 0;
+		this.flags = 0;
+		this.map = Util.ArrayInit(this.row,this.col);
 	}
 }
 class Cell extends Cells{
-	private isOpened: boolean = false
-	private isMine: boolean = false
-	private neighbourMines: number = 0
-	constructor(args:any, n:number) {
+	private isOpened: boolean
+	private isMine: boolean
+	private isFlaged: boolean
+	private neighbourMines: number
+	constructor(args:any) {
 		super(args);
-		this.neighbourMines = n;
-		if(n===9) {
-			this.isMine = true;
-		}
-		console.log(this.isOpened);
+		this.neighbourMines = args.n || 0;
+		this.isMine = (args.n===9)? true: false;
+		this.isFlaged = false;
+		this.isOpened = false;
 	}
 	open(r:number, c:number){
 		return (this.isMine)? this.fire(): this.showCell(r,c);
 	}
 	fire(){
 		this.showCell(-1,-1);
+	}
+	flag(){
+		this.isFlaged = !this.flag;
+		console.log('flagged');
 	}
 	showCell(r:number,c:number){
 		console.log(r,c);
@@ -67,31 +75,35 @@ class MineSweeper {
 	private _map: number[][];
 	private cells: any;
 	constructor(){
+		document.getElementsByTagName('main')[0].addEventListener('contextmenu', (e)=>{
+			e.preventDefault();
+		});
 		this.gameInit();
-		let cells = new Cells({
+		this.cells = new Cells({
 			row: this.row,
 			col: this.col,
 			mines: this.mines
 		});
+		document.getElementsByName('mineNums')[0].innerHTML += this.mines;
 
 		_.each(document.getElementsByTagName('button'), (v)=>{
 			let name:any = v.name.split('_');
 			name[0] = parseInt(name[0],10) -1;
 			name[1] = parseInt(name[1],10) -1;
-			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ""+this._map[name[0]][name[1]]: '&#128163;';
-		});
-
-		$('button').on('click', (ev: any)=>{
-
-			console.log((ev.target.name));
+			this.cells.map[name[0]][name[1]] = new Cell({
+				n: this._map[name[0]][name[1]]
+			});
+			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ''+this._map[name[0]][name[1]]: '&#128163;';
+			v.addEventListener('click', ()=>{
+				console.log(v.name);
+			});
+			v.addEventListener('contextmenu', (e)=>{
+				e.preventDefault();
+				console.log('right',v.name);
+				this.cells.map[name[0]][name[1]].flag();
+			});
 		});
 	}
-	/**
-	 * Set mine spot
-	 * @param {number} row   [description]
-	 * @param {number} col   [description]
-	 * @param {number} mines Number of mine
-	 */
 	setBombs(row: number, col: number, mines: number): void{
 		let i = 0;
 		do {
@@ -99,12 +111,12 @@ class MineSweeper {
 			let c = _.random(0,col-1);
 			if(this._map[r][c]!==9) {
 				this._map[r][c] = 9;
-				this.setGuideNumber(r,c);
+				this.addGuideNumber(r,c);
 				i++;
 			}
 		} while (i < mines);
 	}
-	setGuideNumber(r:number, c:number): void{
+	addGuideNumber(r:number, c:number): void{
 		const area: number[][] = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 		for(let i=0; i<8; i++){
 			const _r = r+area[i][0];
@@ -120,7 +132,6 @@ class MineSweeper {
 		this.mines = Math.floor(this.row*this.col*2/9);
 		this._map = Util.ArrayInit(this.row,this.col);
 		this.setBombs(this.row, this.col, this.mines);
-
 	}
 	public get map(){
 		return this._map;

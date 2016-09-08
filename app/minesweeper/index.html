@@ -4,21 +4,22 @@
 	<meta charset="utf-8">
 	<meta content="">
 	<title>Mine Sweeper</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
 	<script src="page.js"></script>
 	<style type="text/css">
+		caption{caption-side:top;font-size:1rem;}
 		.table{width:auto;font-size:1.5rem;}
-		.table td{height:1em;width:1em;background-color:#ccc;line-height:1;vertical-align:middle;padding:0;font-size:1em;border-right:2px solid #eceeef;border-top-width:2px;}
-		.btn{display:block;line-height:1;padding:0;height:1em;width:1em;border-radius:0;font-size:1em;border:0;}
+		.table td{height:24px;width:24px;background-color:#ccc;line-height:1;vertical-align:middle;padding:0;font-size:24px;border-right:2px solid #eceeef;border-top-width:2px;}
+		.btn{display:block;line-height:24px;padding:0;height:24px;width:24px;border-radius:0;font-size:20px;border:0;text-align:center;vertical-align:middle;}
 	</style>
 </head>
 <body>
 <h1>まいんすいーぱー</h1>
 <div class="container">
 
-<main id="">
+<main id="Main">
 <table id="Table" class="text-xs-center table">
-<caption>&#128163; = <span name="mineNums"></span></caption>
+<caption class="text-xs-right">&#9971;: <span name="flagNums">0</span> / &#128163;: <span name="mineNums"></span></caption>
 <tbody>
 <tr><td><button class="btn" name="1_1">&nbsp;</button></td><td><button class="btn" name="1_2">&nbsp;</button></td><td><button class="btn" name="1_3">&nbsp;</button></td><td><button class="btn" name="1_4">&nbsp;</button></td></tr>
 <tr><td><button class="btn" name="2_1">&nbsp;</button></td><td><button class="btn" name="2_2">&nbsp;</button></td><td><button class="btn" name="2_3">&nbsp;</button></td><td><button class="btn" name="2_4">&nbsp;</button></td></tr>

@@ -28,6 +28,7 @@
     "@types/jquery": "^1.10.31",
     "@types/node": "^6.0.38",
     "@types/underscore": "^1.7.32",
-    "backbone-typings": "^1.0.3"
+    "backbone-typings": "^1.0.3",
+    "underscore": "^1.8.3"
   }
 }
