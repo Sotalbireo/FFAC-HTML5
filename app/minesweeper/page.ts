@@ -1,10 +1,26 @@
 /// <reference path="../../node_modules/jquery/dist/jquery.min.js" />
-/// <reference path="../../node_modules/backbone/node_modules/underscore/underscore-min.js" />
+/// <reference path="../../node_modules/underscore/underscore-min.js" />
+class Util {
+	static ArrayInit(row: number, col: number): number[][]{
+		let array = new Array(row);
+		for(let i = 0; i < row; i++){
+			let c: number[] = new Array(col);
+			for(let j=0;j<col;j++){
+				c[j] = 0;
+			}
+			array[i] = c;
+		}
+		return array;
+	}
+}
 
 class Cells {
+	private col: number
+	private row: number
 
-	constructor(args:any) {
-		console.log(args);
+	constructor(args?:any) {
+		args = args || {};
+
 	}
 }
 class Cell extends Cells{
@@ -47,30 +63,36 @@ class Cell extends Cells{
 class MineSweeper {
 	private row: number;
 	private col: number;
-	private bombs: number;
+	private mines: number;
 	private _map: number[][];
 	private cells: any;
 	constructor(){
 		this.gameInit();
+		let cells = new Cells({
+			row: this.row,
+			col: this.col,
+			mines: this.mines
+		});
 
 		_.each(document.getElementsByTagName('button'), (v)=>{
 			let name:any = v.name.split('_');
 			name[0] = parseInt(name[0],10) -1;
 			name[1] = parseInt(name[1],10) -1;
-			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ""+this._map[name[0]][name[1]]: '&#'+parseInt('1f4a3',16);
+			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ""+this._map[name[0]][name[1]]: '&#128163;';
 		});
 
 		$('button').on('click', (ev: any)=>{
+
 			console.log((ev.target.name));
 		});
 	}
 	/**
-	 * Set bomb spot
+	 * Set mine spot
 	 * @param {number} row   [description]
 	 * @param {number} col   [description]
-	 * @param {number} bombs Number of bomb
+	 * @param {number} mines Number of mine
 	 */
-	setBombs(row: number, col: number, bombs: number): void{
+	setBombs(row: number, col: number, mines: number): void{
 		let i = 0;
 		do {
 			let r = _.random(0,row-1);
@@ -80,7 +102,7 @@ class MineSweeper {
 				this.setGuideNumber(r,c);
 				i++;
 			}
-		} while (i < bombs);
+		} while (i < mines);
 	}
 	setGuideNumber(r:number, c:number): void{
 		const area: number[][] = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
@@ -92,28 +114,12 @@ class MineSweeper {
 			}
 		}
 	}
-	arrayInit(row: number, col: number): number[][]{
-		let array = new Array(row);
-		for(let i = 0; i < row; i++){
-			let c: number[] = new Array(col);
-			for(let j=0;j<col;j++){
-				c[j] = 0;
-			}
-			array[i] = c;
-		}
-		return array;
-	}
 	gameInit(): void{
 		this.row = $('#Table tr').length;
 		this.col = $('#Table tr td').length / this.row;
-		this.bombs = Math.floor(this.row*this.col*2/9);
-		this._map = this.arrayInit(this.row,this.col);
-		this.setBombs(this.row, this.col, this.bombs);
-		this.cells = new Cells({
-			'row': this.row,
-			'col': this.col,
-			'bom': this.bombs
-		});
+		this.mines = Math.floor(this.row*this.col*2/9);
+		this._map = Util.ArrayInit(this.row,this.col);
+		this.setBombs(this.row, this.col, this.mines);
 
 	}
 	public get map(){
