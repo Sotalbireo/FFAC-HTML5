@@ -14,43 +14,40 @@ class Util {
 	}
 }
 
-class Cells {
-	private col: number
-	private row: number
-	private flags: number
-	private map: any
-	constructor(args?:any) {
-		args = args || {};
-		this.col = args.col || 0;
-		this.row = args.row || 0;
-		this.flags = 0;
-		this.map = Util.ArrayInit(this.row,this.col);
-	}
-}
-class Cell extends Cells{
-	private isOpened: boolean
-	private isMine: boolean
-	private isFlaged: boolean
-	private neighbourMines: number
-	constructor(args:any) {
-		super(args);
-		this.neighbourMines = args.n || 0;
-		this.isMine = (args.n===9)? true: false;
+class Cell{
+	private isMine: boolean;
+	private isFlaged: boolean;
+	private neighbourMines: number;
+	constructor(n:number) {
+		this.neighbourMines = n;
+		this.isMine = (n===9)? true: false;
 		this.isFlaged = false;
-		this.isOpened = false;
 	}
-	open(r:number, c:number){
-		return (this.isMine)? this.fire(): this.showCell(r,c);
+	open(e:any,v:any){
+		e=e;
+		if(!this.isFlaged){
+			return (this.isMine)? this.fire(): this.show(v);
+		}
+			return;
 	}
-	fire(){
-		this.showCell(-1,-1);
+	private fire(){
+		console.log('fire');
+
 	}
-	flag(){
-		this.isFlaged = !this.flag;
-		console.log('flagged');
+	flag(e:any):void{
+		this.isFlaged = !this.isFlaged;
+		MineSweeper.flags += (this.isFlaged)? 1: -1;
+		console.log('flagged',MineSweeper.flags);
+		e.target.innerHTML = (this.isFlaged)? "&#128681;": this.neighbourMines;
+		document.getElementsByName('flagNums')[0].textContent = ''+MineSweeper.flags;
+		return;
 	}
-	showCell(r:number,c:number){
-		console.log(r,c);
+	private show(v:any):void {
+		console.log('show');
+
+		v.removeEventListener('click');
+		// e.removeEventListener('contextmenu');
+		return;
 	}
 }
 
@@ -72,35 +69,29 @@ class MineSweeper {
 	private row: number;
 	private col: number;
 	private mines: number;
-	private _map: number[][];
+	static flags: number;
+	private map: number[][];
 	private cells: any;
 	constructor(){
-		document.getElementsByTagName('main')[0].addEventListener('contextmenu', (e)=>{
-			e.preventDefault();
-		});
+		document.getElementsByTagName('main')[0].addEventListener('contextmenu', (e)=>{ e.preventDefault();});
+
 		this.gameInit();
-		this.cells = new Cells({
-			row: this.row,
-			col: this.col,
-			mines: this.mines
-		});
-		document.getElementsByName('mineNums')[0].innerHTML += this.mines;
+
+		document.getElementsByName('mineNums')[0].textContent += this.mines;
 
 		_.each(document.getElementsByTagName('button'), (v)=>{
-			let n:any = v.name.split('_');
-			n[0] = parseInt(n[0],10) -1;
-			n[1] = parseInt(n[1],10) -1;
-			this.cells.map[n[0]][n[1]] = new Cell({
-				n: this._map[n[0]][n[1]]
-			});
-			v.innerHTML = (this._map[n[0]][n[1]]!==9)? ''+this._map[n[0]][n[1]]: '&#128163;';
-			v.addEventListener('click', ()=>{
-				console.log(v.name);
+			let n:number[] = this.getArrayIdFromTagsName(v.name);
+			this.cells[n[0]][n[1]] = new Cell(this.map[n[0]][n[1]]);
+
+
+			v.innerHTML = (this.map[n[0]][n[1]]!==9)? ''+this.map[n[0]][n[1]]: '&#128163;';
+
+
+			v.addEventListener('click', (e)=>{
+				this.cells[n[0]][n[1]].open(e,v);
 			});
 			v.addEventListener('contextmenu', (e)=>{
-				e.preventDefault();
-				console.log('right',v.name);
-				this.cells.map[n[0]][n[1]].flag();
+				this.cells[n[0]][n[1]].flag(e);
 			});
 		});
 	}
@@ -109,20 +100,20 @@ class MineSweeper {
 		do {
 			let r = _.random(0,row-1);
 			let c = _.random(0,col-1);
-			if(this._map[r][c]!==9) {
-				this._map[r][c] = 9;
+			if(this.map[r][c]!==9) {
+				this.map[r][c] = 9;
 				this.addGuideNumber(r,c);
 				i++;
 			}
 		} while (i < mines);
 	}
-	addGuideNumber(r:number, c:number): void{
+	addGuideNumber(r:number,c:number): void{
 		const area: number[][] = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 		for(let i=0; i<8; i++){
-			const _r = r+area[i][0];
-			const _c = c+area[i][1];
+			let _r = r+area[i][0];
+			let _c = c+area[i][1];
 			if(0 <= _r && _r < this.row && 0 <= _c && _c < this.col) {
-				this._map[_r][_c] += (this._map[_r][_c]===9)? 0:1;
+				this.map[_r][_c] += (this.map[_r][_c]===9)? 0:1;
 			}
 		}
 	}
@@ -130,12 +121,27 @@ class MineSweeper {
 		this.row = $('#Table tr').length;
 		this.col = $('#Table tr td').length / this.row;
 		this.mines = Math.floor(this.row*this.col*2/9);
-		this._map = Util.ArrayInit(this.row,this.col);
+		this.map = Util.ArrayInit(this.row,this.col);
 		this.setBombs(this.row, this.col, this.mines);
+		this.cells = Util.ArrayInit(this.row,this.col);
+		MineSweeper.flags = 0;
 	}
-	public get map(){
-		return this._map;
+	getArrayIdFromTagsName(str:string):number[]{
+		let ret:any = str.split('_');
+		ret[0] = parseInt(ret[0],10);
+		ret[1] = parseInt(ret[1],10);
+		return ret;
 	}
+	// private showAllCells(): void{
+	// 	console.log('showAll');
+	// 	for(let i=0; i<this.row; i++){
+	// 		for(let j=0; j<this.col; j++){
+	// 			console.log(i,j);
+	// 			console.dir(this.cells[i][j]);
+	// 			this.cells[i][j].show();
+	// 		}
+	// 	}
+	// }
 }
 
 function ready(fn: any) {
