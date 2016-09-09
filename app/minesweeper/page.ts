@@ -87,20 +87,20 @@ class MineSweeper {
 		document.getElementsByName('mineNums')[0].innerHTML += this.mines;
 
 		_.each(document.getElementsByTagName('button'), (v)=>{
-			let name:any = v.name.split('_');
-			name[0] = parseInt(name[0],10) -1;
-			name[1] = parseInt(name[1],10) -1;
-			this.cells.map[name[0]][name[1]] = new Cell({
-				n: this._map[name[0]][name[1]]
+			let n:any = v.name.split('_');
+			n[0] = parseInt(n[0],10) -1;
+			n[1] = parseInt(n[1],10) -1;
+			this.cells.map[n[0]][n[1]] = new Cell({
+				n: this._map[n[0]][n[1]]
 			});
-			v.innerHTML = (this._map[name[0]][name[1]]!==9)? ''+this._map[name[0]][name[1]]: '&#128163;';
+			v.innerHTML = (this._map[n[0]][n[1]]!==9)? ''+this._map[n[0]][n[1]]: '&#128163;';
 			v.addEventListener('click', ()=>{
 				console.log(v.name);
 			});
 			v.addEventListener('contextmenu', (e)=>{
 				e.preventDefault();
 				console.log('right',v.name);
-				this.cells.map[name[0]][name[1]].flag();
+				this.cells.map[n[0]][n[1]].flag();
 			});
 		});
 	}
