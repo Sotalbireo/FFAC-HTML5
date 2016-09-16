@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ja" data-framework="typescript">
+<head>
+	<meta charset="utf-8">
+	<meta content="">
+	<title>FFA</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+	<script src="page.js"></script>
+	<link rel="stylesheet" type="text/css" href="page.css">
+	<style type="text/css">
+		td,dd{word-wrap:break-word;}
+	</style>
+</head>
+<body>
+<h1>FF Adventure</h1>
+<section class="container">
+<h2>モンスターハント</h2>
+
+<section style="width:80%;margin:2rem 10% 5rem">
+<h3>{{Monster.name}}が現れた！</h3>
+
+
+</section>
+
+
+
+
+
+<pre>
+#----------------------#
+#  モンスターとの戦闘  #
+#----------------------#
+sub monster {
+
+	open(IN,"<$chara_file");
+	@battle = <IN>;
+	close(IN);
+
+	foreach(@battle){
+		($kid,$kpass,$ksite,$kurl,$kname,$ksex,$kchara,$kn_0,$kn_1,$kn_2,$kn_3,$kn_4,$kn_5,$kn_6,$ksyoku,$kclass,$khp,$kmaxhp,$kex,$klv,$kgold,$klp,$ktotal,$kkati,$kwaza,$ki_name,$ki_dmg,$kmons,$khost,$kdate) = split(/<>/);
+		if($in{'id'} eq "$kid") { last; }
+	}
+	if (($in{'id'} ne $kid) or ($in{'pass'} ne $kpass)) {&error('ID、パスワードが違います');}
+
+	$ltime = time();
+	$ltime = $ltime - $kdate;
+	$vtime = $b_time - $ltime;
+	$mtime = $m_time - $ltime;
+	if($in{'id'} ne "$kid") {&error("オープンエラー、ID・パスワードが正しくありません。");}
+
+	if($ltime < $m_time and $ktotal) {
+		&error("$mtime秒後闘えるようになります。<br>\n");
+	}
+
+	if(!$kmons) { &error("一度キャラクターと闘ってください"); }
+
+	open(IN,"<$monster_file");
+	@MONSTER = <IN>;
+	close(IN);
+
+	$r_no = @MONSTER;
+
+	$r_no = int(rand($r_no));
+
+	($mname,$mex,$mhp,$msp,$mdmg) = split(/<>/,$MONSTER[$r_no]);
+
+	if($in{'site'}) { $ksite = $in{'site'}; }
+	if($in{'url'}) { $kurl = $in{'url'}; }
+	if($in{'waza'}) { $kwaza = $in{'waza'}; }
+	if($in{'c_name'}) { $kname = $in{'c_name'}; }
+	$khp_flg = $khp;
+	$mhp = int(rand($mhp)) + $msp;
+	$mhp_flg = $mhp;
+
+	$i=1;$j=0;@battle_date=();
+	foreach(1..$turn) {
+		$dmg1 = $klv * (int(rand(5)) + 1);
+		$dmg2 = (int(rand($mdmg)) + 1) + $mdmg;
+		$clit1 = "";
+		$clit2 = "";
+		$com1 = "";
+		$com2 = "$mnameが襲いかかった！！";
+		$kawasi1 = "";
+		$kawasi2 = "";
+
+			# 挑戦者ダメージ計算
+			if($ksyoku == 0){
+				$dmg1 = $dmg1 + int(rand($kn_0));
+				$com1 = "$knameは、剣で切りつけた！！<p>";
+			}elsif($ksyoku == 1){
+				$dmg1 = $dmg1 * int(rand($kn_1));
+				$com1 = "$knameは、魔法を唱えた！！<p>";
+			}elsif($ksyoku == 2){
+				$dmg1 = $dmg1 * int(rand($kn_2));
+				$com1 = "$knameは、魔法を唱えた！！<p>";
+			}elsif($ksyoku == 3){
+				$dmg1 = $dmg1 + int(rand($kn_4));
+				$com1 = "$knameは、背後から切りつけた！！<p>";
+			}elsif($ksyoku == 4){
+				$dmg1 = $dmg1 + int(rand($kn_3)) + int(rand($kn_0));
+				$com1 = "$knameは、弓で攻撃！！<p>";
+			}elsif($ksyoku == 5){
+				$dmg1 = $dmg1 * (int(rand($kn_1)) + int(rand($kn_4)));
+				$com1 = "$knameは、魔法を唱えた！！<p>";
+			}elsif($ksyoku == 6){
+				$dmg1 = $dmg1 * (int(rand($kn_1)) + int(rand($kn_4)));
+				$com1 = "$knameは、呪歌を歌った！！<p>";
+			}elsif($ksyoku == 7){
+				$dmg1 = $dmg1 * (int(rand($kn_1)) + int(rand($kn_3)));
+				$com1 = "$knameは、超能\力を使った！！<p>";
+			}elsif($ksyoku == 8){
+				$dmg1 = $dmg1 * (int(rand($kn_1)) + int(rand($kn_2)));
+				$com1 = "$knameは、精霊魔法と、神聖魔法を同時に唱えた！！<p>";
+			}elsif($ksyoku == 9){
+				$dmg1 = $dmg1 + int(rand($kn_0)) + int(rand($kn_2));
+				$com1 = "$knameは、槍を突き刺した！！<p>";
+			}elsif($ksyoku == 10){
+				$dmg1 = $dmg1 + int(rand($kn_0)) + int(rand($kn_2));
+				$com1 = "$knameは、神聖魔法を唱えつつ、剣で切りつけた！！<p>";
+			}elsif($ksyoku == 11){
+				$dmg1 = $dmg1 + int(rand($kn_4)) + int(rand($kn_5));
+				$com1 = "$knameは、見えない速さで切りつけた！！<p>";
+			}elsif($ksyoku == 12){
+				$dmg1 = $dmg1 + int(rand($kn_0)) + int(rand($kn_2));
+				$com1 = "$knameは、殴りつけた！！<p>";
+			}elsif($ksyoku == 13){
+				$dmg1 = $dmg1 + int(rand($kn_0)) + int(rand($kn_2));
+				$com1 = "$knameは、蹴りつけた！！<p>";
+			}
+
+			if(int(rand(20)) == 0) {
+				$clit1 = "<font size=5>$kname「<b>$kwaza</b>」</font><p><b class=\"clit\">クリティカル！！</b>";
+				$dmg1 = $dmg1 * 2;
+			}
+
+			if(int(rand(30)) == 0) {
+				$clit2 = "<b class=\"clit\">クリティカル！！</b>";
+				$dmg2 = int($dmg2 * 1.5);
+			}
+
+		$battle_date[$j] = <<"EOM";
+<TABLE BORDER=0>
+<TR>
+	<TD CLASS="b2" COLSPAN="3" ALIGN="center">
+	$iターン
+	</TD>
+</TR>
+<TR>
+<TD>
+<TABLE BORDER=1>
+<TR>
+	<TD CLASS="b1">
+	なまえ
+	</TD>
+	<TD CLASS="b1">
+	HP
+	</TD>
+	<TD CLASS="b1">
+	職業
+	</TD>
+	<TD CLASS="b1">
+	LV
+	</TD>
+</TR>
+<TR>
+	<TD>
+	$kname
+	</TD>
+	<TD>
+	$khp_flg\/$kmaxhp
+	</TD>
+	<TD>
+	$chara_syoku[$ksyoku]
+	</TD>
+	<TD>
+	$klv
+	</TD>
+</TR>
+</TABLE>
+</TD>
+<TD>
+<FONT SIZE=5 COLOR="#9999DD">VS</FONT>
+</TD>
+<TD>
+<TABLE BORDER=1>
+<TR>
+	<TD CLASS="b1">
+	なまえ
+	</TD>
+	<TD CLASS="b1">
+	HP
+	</TD>
+</TR>
+<TR>
+	<TD>
+	$mname
+	</TD>
+	<TD>
+	$mhp/$mhp_flg
+	</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<p>
+$com1 $clit1 $kawasi2 $mname に <font class="dmg"><b>$dmg1</b></font> のダメージを与えた。<p>
+$com2 $clit2 $kawasi1 $kname に <font class="dmg"><b>$dmg2</b></font> のダメージを与えた。<p>
+EOM
+
+		$khp_flg = $khp_flg - $dmg2;
+		$mhp = $mhp - $dmg1;
+
+		if($mhp <= 0) { $win = 1; last; }
+		elsif($khp_flg <= 0) { $win = 0; last; }
+
+		$i++;
+		$j++;
+	}
+
+	if($win) {
+		$ktotal += 1;
+		$kkati += 1;
+		$kex = $kex + $mex;
+		$kmons -= 1;
+		$gold = $klv * 10 + int(rand($klp));
+		$kgold = $kgold + $gold;
+		$comment = "<b><font size=5>$knameは、戦闘に勝利した！！</font></b><p>";
+	}else{
+		$ktotal += 1;
+		$mex = int(rand($klp));
+		$kex = $kex + $mex;
+		$kmons -= 1;
+		if($kgold) { $kgold = int($kgold / 2); }
+		else { $kgold = 0; }
+		$comment = "<b><font size=5>$knameは、戦闘に負けた・・・。</font></b><p>";
+	}
+
+	if($kex >= ($klv * $lv_up)) { &lv_up; }
+
+	$khp = $khp_flg + int(rand($kn_3));
+	if($khp > $kmaxhp) { $khp = $kmaxhp; }
+	if($khp <= 0) { $khp = $kmaxhp; }
+
+	&regist;
+
+	&header;
+
+	print "<h1>$knameは、$mnameに戦いを挑んだ！！</h1><hr size=0><p>\n";
+
+	$i=0;
+	foreach(@battle_date){
+		print "$battle_date[$i]";
+		$i++;
+	}
+
+	if($win) { print "$comment<p>$knameは、$mexの経験値を手に入れた。<b>$gold</b>G手に入れた。<p>\n"; }
+	else { print "$comment<p>$knameは、$mexの経験値を手に入れた。お金が半分になった。<p>\n"; }
+
+	&footer;
+
+	exit;
+}
+</pre>
+
+
+
+
+</section>
+<script>ready(()=>{new MyPage({});});</script>
+</body>
+</html>

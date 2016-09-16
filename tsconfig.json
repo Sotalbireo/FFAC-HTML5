@@ -19,8 +19,8 @@
 		"preserveConstEnums": true,
 		"removeComments": true,
 		"strictNullChecks": true,
-		"target": "es6",
-		"sourceMap": false
+		"sourceMap": false,
+		"target": "es6"
 	},
 	"include": [
 		"app/minesweeper/page.ts"
