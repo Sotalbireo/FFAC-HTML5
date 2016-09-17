@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Symbola';
+    src: url('../font/symbola.eot'); /* IE9 Compat Modes */
+    src: local('Symbola'), /* Enable if the font installed local. */
+        /* url('../font/symbola.eot?') format('embedded-opentype'), /* eof - IE6-IE8 */
+        /* url('../font/symbola.woff') format('woff'), /* woff - Modern Browsers */
+         url('../font/symbola.ttf')  format('truetype'), /* ttf - Safari, Android, iOS */
+         url('../font/symbola.svg#Symbola') format('svg'); /* svg - Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+.emoji {
+    font-family: Symbola;
+}
