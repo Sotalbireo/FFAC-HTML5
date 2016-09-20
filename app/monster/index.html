@@ -17,12 +17,45 @@
 <h2>モンスターハント</h2>
 
 <section style="width:80%;margin:2rem 10% 5rem">
-<h3>{{Monster.name}}が現れた！</h3>
-
-
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading">討伐間隔制限中です</h4>
+<p>この地域では、モンスターハントは【{{monsterhant_margin}}】以上間隔を空けるように定められています。</p>
+<p class="m-b-0">制限が解除されるまで、残りおよそ【{{}}】です。</p>
+</div>
 </section>
 
 
+<section style="width:80%;margin:2rem 10% 5rem">
+<h3>{{Monster.name}}が現れた！</h3>
+<section id="Turn01">
+<h4>Turn: 01</h4>
+<div class="row">
+<div class="col-sm-5"><dl class="row">
+<dt class="col-xs-2">Name</dt><dd class="col-xs-10">AIUEO</dd>
+<dt class="col-xs-2">HP</dt><dd class="col-xs-10">2312123794694654613476567587623121237946946546134765675876<br>
+<progress class="progress" value="16902" max="25565">
+</progress></dd>
+</dl></div>
+<div class="col-sm-2 text-xs-center">V.S.</div>
+<div class="col-sm-5"><dl class="row">
+<dt class="col-xs-2">Name</dt><dd class="col-xs-10">&laquo;Job/Class&raquo; AIUEO</dd>
+<dt class="col-xs-2">HP</dt><dd class="col-xs-10">23121237946946546134765675876</dd>
+</dl></div>
+</div>
+<ul class="list-group">
+<li class="list-group-item">{{Player.name}}は剣で切りつけた！<br>{{Damage}}ダメージを与えた</li>
+<li class="list-group-item">{{Player.name}}の<em>「必殺技」</em>！<br>{{Damage}}ダメージを与えた</li>
+<li class="list-group-item">{{Monster.name}}の攻撃！<br><em>クリティカル！</em> {{Damage}}ダメージを受けた</li>
+</ul>
+</section>
+</section>
+
+
+<section style="width:80%;margin:2rem 10% 5rem">
+<h3>{{Monster.name}}討伐に成功した！</h3>
+<h3>{{Monster.name}}討伐に失敗した…</h3>
+<p>{{Player.name}}は、000の経験値と000{{Money.unit}}を手に入れた</p>
+</section>
 
 
 

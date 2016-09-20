@@ -23,16 +23,15 @@ class Cell{
 		this.isMine = (n===9)? true: false;
 		this.isFlaged = false;
 	}
-	open(e:any,v:any){
-		e=e;
+	open(e:any){
 		if(!this.isFlaged){
-			return (this.isMine)? this.fire(): this.show(v);
+			return (this.isMine)? this.fire(): this.show(e.target.name);
 		}
 			return;
 	}
 	private fire(){
 		console.log('fire');
-
+		return MineSweeper.a;
 	}
 	flag(e:any):void{
 		this.isFlaged = !this.isFlaged;
@@ -42,11 +41,9 @@ class Cell{
 		document.getElementsByName('flagNums')[0].textContent = ''+MineSweeper.flags;
 		return;
 	}
-	private show(v:any):void {
-		console.log('show');
-
-		v.removeEventListener('click');
-		// e.removeEventListener('contextmenu');
+	private show(name:string):void {
+		console.log('show',document.getElementsByName(name)[0]);
+		document.getElementsByName(name)[0].parentElement.innerHTML = '@';
 		return;
 	}
 }
@@ -66,6 +63,8 @@ class Cell{
 // }
 
 class MineSweeper {
+	static a: string = 'BOMB';
+	static b: string = 'BLANK';
 	private row: number;
 	private col: number;
 	private mines: number;
@@ -87,13 +86,26 @@ class MineSweeper {
 			v.innerHTML = (this.map[n[0]][n[1]]!==9)? ''+this.map[n[0]][n[1]]: '&#128163;';
 
 
-			v.addEventListener('click', (e)=>{
-				this.cells[n[0]][n[1]].open(e,v);
-			});
-			v.addEventListener('contextmenu', (e)=>{
-				this.cells[n[0]][n[1]].flag(e);
-			});
+			v.addEventListener('click', (event)=>this.clickL(event,n));
+			v.addEventListener('contextmenu', (event)=>this.clickR(event,n));
 		});
+	}
+	clickL(e:any,n:number[]){
+		let tmp = this.cells[n[0]][n[1]].open(e);
+		switch(tmp){
+			case MineSweeper.a:
+			console.log('bomb');
+			this.gameOver();
+				break;
+			case MineSweeper.b:
+				break;
+			default:
+				break;
+		}
+		return;
+	}
+	clickR(e:any,n:number[]){
+		this.cells[n[0]][n[1]].flag(e);
 	}
 	setBombs(row: number, col: number, mines: number): void{
 		let i = 0;
@@ -117,6 +129,17 @@ class MineSweeper {
 			}
 		}
 	}
+	gameOver(): void{
+		for(let r=0; r<this.row; r++){
+			for(let c=0; c<this.col; c++){
+				this.cells[r][c].show(this.getTagsNameFromArrayId(r,c));
+			}
+		}
+		alert('Game Over :(');
+	}
+	gameClear(): void{
+
+	}
 	gameInit(): void{
 		this.row = $('#Table tr').length;
 		this.col = $('#Table tr td').length / this.row;
@@ -131,6 +154,9 @@ class MineSweeper {
 		ret[0] = parseInt(ret[0],10);
 		ret[1] = parseInt(ret[1],10);
 		return ret;
+	}
+	getTagsNameFromArrayId(r:number,c:number):string{
+		return r+'_'+c;
 	}
 	// private showAllCells(): void{
 	// 	console.log('showAll');
