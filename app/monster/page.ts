@@ -2,7 +2,23 @@
 /// <reference path="../../node_modules/underscore/underscore-min.js" />
 /// <reference path="../../node_modules/backbone/backbone-min.js" />
 
-class Charactor {
+class MonsterHunt {
+	turn: number;
+	static Buttle(player1, player2){
+
+		for(this.turn=1,isContinues:boolean=true;isContinues;this.turn++){
+			isContinues = isOdd(this.turn)? this.phasing(player1): this.phasing(player2);
+		}
+	}
+	phasing(player){
+
+	}
+	constructor() {
+		// code...
+	}
+}
+
+class CharactorMovingObj {
 	private maxHP: number;
 	private HP: number;
 	private EXP: number;
@@ -15,7 +31,7 @@ class Charactor {
 	}
 	attack(attr:number){
 		let damage :number= this.Level + _.random(-5,6);
-			damage = (damage < 1)? this.Level: damage;
+			damage = (damage > 0)? damage: this.Level;
 		console.log('level',this.Level,'damage',damage);
 		const isCritical = ()=>{
 			if(true){
@@ -35,11 +51,26 @@ class Charactor {
 		};
 		damage += attr;
 		return [isCritical(), isExAttack(), Math.floor(damage)];
-
+	}
+	incurred(){
 
 	}
+	death(){
+
+	}
+	attack_pre(job:string, attributes:number[]){
+		switch (job) {
+			case "value":
+				// code...
+				break;
+
+			default:
+				// code...
+				break;
+		}
+	}
 }
-class Player extends Charactor{
+class Player extends MovingObj{
 	private job: string;
 	constructor(){
 		super();
@@ -82,7 +113,8 @@ class MyPage extends Backbone.View<UserData> {
 	}
 }
 
-
+function isEven = n => (n%2)===0;
+function isOdd  = n => (n%2)===1;
 function ready(fn: any) {
 	if (document.readyState != 'loading'){
 		fn();
