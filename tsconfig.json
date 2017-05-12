@@ -1,31 +1,36 @@
 {
-	"compilerOptions": {
-		"allowJs": true,
-		"experimentalDecorators": true,
-		"forceConsistentCasingInFileNames": true,
-		"lib": [
-			"dom",
-			"es2017"
-		],
-		"listFiles": true,
-		"module": "amd",
-		"moduleResolution": "node",
-		"noEmitOnError": true,
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"preserveConstEnums": true,
-		"removeComments": true,
-		"strictNullChecks": true,
-		"sourceMap": false,
-		"target": "es6"
-	},
-	"include": [
-		"app/minesweeper/page.ts"
-	],
-	"exclude": [
-		"node_modules"
-	]
+    "compilerOptions": {
+        "allowJs": true,
+        "alwaysStrict": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "react",
+        "lib": [
+            "dom",
+            "es2017"
+        ],
+        "listEmittedFiles": true,
+        "listFiles": false,
+        "newLine": "lf",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "dist/",
+        "preserveConstEnums": true,
+        "pretty": false,
+        "removeComments": true,
+        "strictNullChecks": true,
+        "sourceMap": true,
+        "target": "es6"
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
