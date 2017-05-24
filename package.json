@@ -20,8 +20,8 @@
   "homepage": "https://github.com/Sotalbireo/FFAC-HTML5#readme",
   "dependencies": {},
   "devDependencies": {
-    "@types/backbone": "^1.3.33",
     "@types/lodash": "^4.14.64",
+    "@types/navigo": "^4.0.1",
     "@types/react": "^15.0.24",
     "@types/react-dom": "^15.5.0"
   }
